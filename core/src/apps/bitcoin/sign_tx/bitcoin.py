@@ -430,6 +430,17 @@ class Bitcoin:
         ):
             raise ProcessError("Original input does not match current input.")
 
+        # A replacement may add the opt-in, which is how a transaction signed
+        # before the fork gets replay protection, but it must not take it away.
+        # Dropping it would hand the host a pre-fork-valid signature over a
+        # transaction the user approved only in its unified form, and a
+        # replacement that changes nothing else is confirmed with the TXID
+        # screen alone.
+        if orig_txi.unified_sighash and not txi.unified_sighash:
+            raise ProcessError(
+                "Replacement transaction must not remove the unified signature hash."
+            )
+
         orig.add_input(orig_txi, script_pubkey)
         orig.index += 1
 

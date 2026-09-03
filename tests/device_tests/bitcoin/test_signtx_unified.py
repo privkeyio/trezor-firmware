@@ -257,18 +257,24 @@ def test_p2pkh(session: Session):
                 request_output(0),
                 messages.ButtonRequest(code=B.ConfirmOutput),
                 (is_core(session), messages.ButtonRequest(code=B.ConfirmOutput)),
-                messages.ButtonRequest(code=B.SignTx, name="unified_sighash"),
+                # Legacy firmware does not populate ButtonRequest.name.
+                messages.ButtonRequest(
+                    code=B.SignTx,
+                    name="unified_sighash" if is_core(session) else None,
+                ),
                 messages.ButtonRequest(code=B.SignTx),
                 request_input(0),
                 request_meta(TXHASH_0dac36),
                 request_input(0, TXHASH_0dac36),
                 request_output(0, TXHASH_0dac36),
                 request_output(1, TXHASH_0dac36),
-                # One pass, not two: the opt-in takes its digest from the
-                # cached sub-hashes, so the legacy re-streaming of every input
-                # and output for this input's digest does not happen.
+                # On core the opt-in takes its digest from the cached
+                # sub-hashes, so the second pass over every input and output
+                # does not happen. Model One keeps that pass, because there it
+                # is also what checks the inputs against the ones approved.
                 request_input(0),
                 request_output(0),
+                (not is_core(session), request_output(0)),
                 request_finished(),
             ]
         )
@@ -731,6 +737,44 @@ def test_fee_bump_of_a_legacy_transaction(session: Session):
         TX_CACHE_MAINNET,
         pubkey,
     )
+
+
+def test_replacement_cannot_drop_the_opt_in(session: Session):
+    """The opt-in is what the user was warned about and approved. A replacement
+    that changes nothing else is confirmed with the TXID screen alone, so if it
+    could quietly drop the opt-in the host would walk away with a
+    pre-fork-valid signature over the same transaction."""
+    orig = TX_CACHE_MAINNET[TXHASH_50f6f1]
+    for txi in orig.inputs:
+        txi.unified_sighash = True
+    prev_txes = {TXHASH_50f6f1: orig, TXHASH_beafc7: TX_CACHE_MAINNET[TXHASH_beafc7]}
+
+    inp1 = messages.TxInputType(
+        address_n=parse_path("m/44h/0h/0h/0/4"),
+        amount=174_998,
+        prev_hash=TXHASH_beafc7,
+        prev_index=0,
+        orig_hash=TXHASH_50f6f1,
+        orig_index=0,
+        unified_sighash=False,
+    )
+    out1 = messages.TxOutputType(
+        address_n=parse_path("m/44h/0h/0h/1/2"),
+        amount=174_998 - 50_000 - 15_000,
+        script_type=messages.OutputScriptType.PAYTOADDRESS,
+        orig_hash=TXHASH_50f6f1,
+        orig_index=0,
+    )
+    out2 = messages.TxOutputType(
+        address="1GA9u9TfCG7SWmKCveBumdA1TZpfom6ZdJ",
+        amount=50_000,
+        script_type=messages.OutputScriptType.PAYTOADDRESS,
+        orig_hash=TXHASH_50f6f1,
+        orig_index=1,
+    )
+
+    with pytest.raises(TrezorFailure, match="unified signature hash"):
+        btc.sign_tx(session, "Bitcoin", [inp1], [out1, out2], prev_txes=prev_txes)
 
 
 def test_signature_only(session: Session):
