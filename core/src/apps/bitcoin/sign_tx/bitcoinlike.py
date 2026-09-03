@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from trezor import utils
+
 from .. import writers
 from . import helpers
 from .bitcoin import Bitcoin
@@ -31,8 +33,10 @@ class Bitcoinlike(Bitcoin):
         if self.coin.force_bip143:
             # Unreachable while the opt-in is gated to coins that do not force
             # BIP-143, but this path would otherwise sign the legacy digest and
-            # stamp 0x21 on it, which fails open rather than closed.
-            assert not txi.unified_sighash
+            # stamp 0x21 on it, which fails open rather than closed. ensure()
+            # rather than assert, because mpy-cross runs at -O3 for release
+            # builds and MicroPython does not compile assertions at all there.
+            utils.ensure(not txi.unified_sighash)
             return tx_info.sig_hasher.hash143(
                 txi,
                 public_keys,

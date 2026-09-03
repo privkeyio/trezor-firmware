@@ -1115,15 +1115,6 @@ def test_sign_tx_refuses_unified_sighash(session: Session):
         bytes.fromhex("76a914a579388225827d9f2fe9014add644487808c695d88ac"),
     ]
 
-    coinjoin_req = make_coinjoin_request(
-        "www.example.com",
-        inputs,
-        input_script_pubkeys,
-        outputs,
-        output_script_pubkeys,
-        no_fee_indices=[],
-    )
-
     # The device's own input asks for the opt-in.
     inputs[1].unified_sighash = True
 

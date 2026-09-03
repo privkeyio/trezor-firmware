@@ -3463,9 +3463,8 @@ static bool signing_sign_segwit_input(TxInputType *txinput) {
       resp.serialized.has_serialized_tx = true;
       // SIGHASH_ALL_TAPROOT is implied and appends nothing; the unified
       // opt-in has no such form, so its byte is carried in the signature.
-      uint32_t hash_type = signing_hash_type(txinput);
       uint8_t taproot_sighash =
-          (hash_type == SIGHASH_ALL_TAPROOT) ? 0 : (hash_type & 0xff);
+          txinput->unified_sighash ? SIGHASH_ALL_UNIFIED : 0;
       resp.serialized.serialized_tx.size = serialize_p2tr_witness(
           resp.serialized.signature.bytes, resp.serialized.signature.size,
           taproot_sighash, resp.serialized.serialized_tx.bytes);
