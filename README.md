@@ -2,7 +2,7 @@
 
 An unofficial fork of [Trezor Firmware](https://github.com/trezor/trezor-firmware) that signs with the unified opt-in signature hash defined by the Bitcoin hardfork, as Bitcoin Knots `v29.4.1.knots20260508` specifies it in [doc/unified-sighash.md](https://github.com/bitcoinknots/bitcoin/blob/v29.4.1.knots20260508/doc/unified-sighash.md). It is not affiliated with SatoshiLabs. SatoshiLabs has not adopted the fork, so use their firmware instead if that is what you want.
 
-> **Not audited. Use at your own risk, and no warranty of any kind, see the [LICENSE](LICENSE.md).** Builds here are not signed by the vendor, so a Trezor Model One shows an "Unofficial firmware detected" screen and its fingerprint on every boot and requires two button presses to continue, permanently. Installing it erases the device, and so does going back to official firmware, so you need your recovery seed both times. Everything below the divider is SatoshiLabs' documentation and describes their firmware rather than this fork.
+> **Not audited. Use at your own risk, and no warranty of any kind, see the [LICENSE](LICENSE.md).** Builds here are not signed by the vendor, so the device shows an unofficial-firmware warning and its fingerprint on every boot, permanently. Installing it erases the device, and so does going back to official firmware, so you need your recovery seed both times. Everything below the divider is SatoshiLabs' documentation and describes their firmware rather than this fork.
 
 ## What differs from Trezor Firmware
 
@@ -18,7 +18,7 @@ Script types covered are bare and P2SH, segwit v0 including P2SH-wrapped, and ta
 
 Trezor Suite does not know about the field, so opting in needs a host that sets it. The [Shrike](https://github.com/privkeyio/shrike) fork does, through [lark](https://github.com/privkeyio/lark).
 
-Releases carry a Bitcoin-only Model One build with a reproducible build recipe, published hashes and a signed manifest.
+Releases carry Bitcoin-only builds for Model One, Model T, Safe 3, Safe 5 and Safe 7, each built twice in the same container and byte identical, with a reproducible build recipe, published hashes and a signed manifest. Only the Model One build has been run on real hardware; the rest are verified on the emulator.
 
 ---
 
