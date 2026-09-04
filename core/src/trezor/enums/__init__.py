@@ -241,7 +241,7 @@ if TYPE_CHECKING:
         Tron = 24
         N1W1 = 25
         TouchWakeup = 26
-        UnifiedSigHash = 28
+        UnifiedSigHash = 29
 
     class SdProtectOperationType(IntEnum):
         DISABLE = 0

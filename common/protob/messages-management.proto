@@ -193,7 +193,9 @@ message Features {
         Capability_N1W1 = 25 [(bitcoin_only) = true];
         Capability_TouchWakeup = 26 [(bitcoin_only) = true];  // Touch to wake from sleep
         reserved 27;                                          // reserved for internal use
-        Capability_UnifiedSigHash = 28
+        // 28 is Capability_Ethereum_EIP7702 upstream, so this takes the next free number rather
+        // than colliding with it and making a device claim a capability it does not have.
+        Capability_UnifiedSigHash = 29
             [(bitcoin_only) = true];  // TxInput.unified_sighash, the unified opt-in signature hash
     }
 }
