@@ -1,0 +1,23 @@
+name: Feature request
+description: Suggest something this firmware should do
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This fork exists only for the unified opt-in signature hash. Anything that is not specific to that, such as a new coin, a seed tool or a change to the device's menus, is better raised [upstream](https://github.com/trezor/trezor-firmware/issues), where it benefits far more people and can ship in firmware your device verifies.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do
+      description: The problem rather than the solution. What are you unable to do today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you have in mind
+    validations:
+      required: false

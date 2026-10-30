@@ -1,0 +1,85 @@
+name: Bug report
+description: Something in this firmware does not work as it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check the [latest release](https://github.com/privkeyio/trezor-firmware/releases/latest) first.
+
+        This is Trezor Firmware with one change: it signs with the unified opt-in signature hash when the host asks for it. Everything else is Trezor's code unchanged, so if official Trezor firmware does the same thing, please report it [upstream](https://github.com/trezor/trezor-firmware/issues), where it gets fixed for everyone.
+
+        Never paste your recovery seed, PIN or passphrase anywhere, including here.
+
+  - type: dropdown
+    id: upstream
+    attributes:
+      label: Does the same thing happen on official Trezor firmware?
+      options:
+        - No, only on this firmware
+        - Yes, official firmware does it too
+        - Haven't checked
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Release
+      description: The release tag you installed, and the `revision` that `trezorctl get-features` prints.
+      placeholder: unified-sighash.2, revision 9d406f1af3d6a8fbe1ae9571e594e7d42f099bde
+    validations:
+      required: true
+
+  - type: dropdown
+    id: model
+    attributes:
+      label: Device
+      options:
+        - Model One (T1B1)
+        - Model T (T2T1)
+        - Safe 3 (T3B1)
+        - Safe 5 (T3T1)
+        - Safe 7 (T3W1)
+        - Emulator
+    validations:
+      required: true
+
+  - type: input
+    id: host
+    attributes:
+      label: Wallet software
+      description: The host that sent the transaction, with its exact version.
+      placeholder: Shrike 2.5.6-blake2b.1
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what the device or the host showed instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: |
+        The host's error or log around the failure.
+        Check it first: a log can contain your addresses and transaction ids.
+      render: text
+    validations:
+      required: false
