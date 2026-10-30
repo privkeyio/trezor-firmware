@@ -3096,7 +3096,7 @@ pub mod features {
         // @@protoc_insertion_point(enum_value:hw.trezor.messages.management.Features.Capability.Capability_TouchWakeup)
         Capability_TouchWakeup = 26,
         // @@protoc_insertion_point(enum_value:hw.trezor.messages.management.Features.Capability.Capability_UnifiedSigHash)
-        Capability_UnifiedSigHash = 28,
+        Capability_UnifiedSigHash = 29,
     }
 
     impl ::protobuf::Enum for Capability {
@@ -3134,7 +3134,7 @@ pub mod features {
                 24 => ::std::option::Option::Some(Capability::Capability_Tron),
                 25 => ::std::option::Option::Some(Capability::Capability_N1W1),
                 26 => ::std::option::Option::Some(Capability::Capability_TouchWakeup),
-                28 => ::std::option::Option::Some(Capability::Capability_UnifiedSigHash),
+                29 => ::std::option::Option::Some(Capability::Capability_UnifiedSigHash),
                 _ => ::std::option::Option::None
             }
         }
@@ -13488,7 +13488,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x1a\x04\x80\xa6\x1d\x01\x12\x13\n\x0fCapability_Tron\x10\x18\x12\x19\n\
     \x0fCapability_N1W1\x10\x19\x1a\x04\x80\xa6\x1d\x01\x12\x20\n\x16Capabil\
     ity_TouchWakeup\x10\x1a\x1a\x04\x80\xa6\x1d\x01\x12#\n\x19Capability_Uni\
-    fiedSigHash\x10\x1c\x1a\x04\x80\xa6\x1d\x01\x1a\x04\xc8\xf3\x18\x01\"\
+    fiedSigHash\x10\x1d\x1a\x04\x80\xa6\x1d\x01\x1a\x04\xc8\xf3\x18\x01\"\
     \x04\x08\x1b\x10\x1b\"\x0c\n\nLockDevice\"&\n\x07SetBusy\x12\x1b\n\texpi\
     ry_ms\x18\x01\x20\x01(\rR\x08expiryMs\"\x0c\n\nEndSession\"\xdd\x05\n\rA\
     pplySettings\x12\x1e\n\x08language\x18\x01\x20\x01(\tR\x08languageB\x02\
