@@ -81,7 +81,7 @@ static uint32_t idx2;  // The index of the input or output in the original tx
                        // (Phase 1), in the previous tx (Phase 2) or in the
                        // current tx when computing the legacy digest (Phase 2).
 static uint32_t external_inputs[16];  // bitfield of external input indices
-static uint32_t unified_inputs[16];  // bitfield of opted-in input indices
+static uint32_t unified_inputs[16];   // bitfield of opted-in input indices
 static uint32_t signatures;
 static TxRequest resp;
 static TxInputType input;
@@ -3062,7 +3062,7 @@ static bool signing_verify_orig_nonlegacy_input(TxInputType *orig_input) {
       signing_hash_zip243(&orig_info, orig_input, hash);
     } else
 #endif
-    if (orig_input->unified_sighash) {
+        if (orig_input->unified_sighash) {
       // fill_input_script_sig() above left the scriptCode in script_sig.
       signing_hash_unified(&orig_info, idx1, unified_script_type(orig_input),
                            orig_input->script_sig.size,
