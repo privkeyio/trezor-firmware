@@ -9,7 +9,7 @@ An unofficial fork of [Trezor Firmware](https://github.com/trezor/trezor-firmwar
 A signature that opts in commits to **every** spent amount and scriptPubKey rather than only the input being signed, which closes CVE-2020-14199 at the consensus layer, and it does not verify under the pre-fork rules, so the transaction cannot be replayed onto a chain that has not adopted the change. **Signing is byte-for-byte unchanged unless the host asks for it.**
 
 - `TxInput.unified_sighash` (protobuf field 21) requests hash type `0x21` for that input, the way `PSBT_IN_SIGHASH_TYPE` carries it in a PSBT.
-- `Capability_UnifiedSigHash` (28) is reported in `Features`, and `trezorlib` refuses to request the opt-in from a device that does not report it rather than letting the field be ignored.
+- `Capability_UnifiedSigHash` (29) is reported in `Features`, and `trezorlib` refuses to request the opt-in from a device that does not report it rather than letting the field be ignored.
 - The digest itself, in `core` and in `legacy`, taken from the sub-hashes both already stream for BIP-341. Those are single SHA-256 where the BIP-143 digests from the same writers are double.
 - An approval screen naming the hash type, in the same register as the existing sighash warnings.
 - The opt-in is bound to what the confirmation screen reported, and a replacement transaction may add it but never remove it.
