@@ -1,4 +1,11 @@
+blank_issues_enabled: false
 contact_links:
-  - name: General support and product feedback
-    url: https://support.trezor.io
-    about: Please do not use this Github repository for technical support. Contact Trezor support directly or visit our community forum at forum.trezor.io.
+  - name: Bug or feature in Trezor Firmware itself
+    url: https://github.com/trezor/trezor-firmware/issues
+    about: Anything not specific to the unified opt-in signature hash belongs upstream, where it reaches far more users.
+  - name: Bug in Shrike
+    url: https://github.com/privkeyio/shrike/issues
+    about: Problems in the wallet that sends the transaction rather than in the firmware.
+  - name: Verifying a download
+    url: https://github.com/privkeyio/trezor-firmware/releases/latest
+    about: Each release says how to check SHA256SUMS, the signature and the firmware fingerprint.
